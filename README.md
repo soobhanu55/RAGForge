@@ -1,9 +1,8 @@
-<<<<<<< HEAD
-# Auto-RAG-Devops
+# AutoRAG-DevOps
 
-An autonomous Retrieval-Augmented Generation (RAG) system that automatically evaluates and improves its own retrieval pipeline.
+A Retrieval-Augmented Generation (RAG) pipeline with a built-in optimizer that grid-searches retrieval strategies (dense, BM25, hybrid) and chunking configurations against an evaluation dataset, scored via RAGAS, to pick the best-performing configuration.
 
-Designed for production environments, this system features modular architecture, scalable components, continuous integration testing, and a Streamlit dashboard.
+Modular architecture: swappable retrievers, chunkers, and rerankers behind a FastAPI backend, with a Streamlit dashboard for ingestion, querying, and pipeline diagnostics.
 
 ---
 
@@ -39,7 +38,6 @@ graph TD
 *   **Dynamic Chunking**: Configurable chunking rules including Naive Fixed, Semantic breakpoints, and token-based Sliding Windows.
 *   **Pipeline Optimizer**: Grid-searches components, evaluated locally with RAGAS metrics (Faithfulness, Recall, Precision, Relevance) to find the optimal deployment config.
 *   **Streamlit UI**: Full diagnostic view of the pipeline flow, ingestion controls, and evaluation tools.
-*   **DevOps Ready**: Pre-configured CI/CD `rag_test.yml` for automated regressions testing on pull requests and deployments.
 
 ## 💻 Tech Stack
 
@@ -48,6 +46,10 @@ graph TD
 - **Retrieval/Store**: Qdrant, `rank_bm25`, `ms-marco-MiniLM` cross-encoder reranker
 - **Eval**: RAGAS
 - **Ops**: Docker, GitHub Actions, Streamlit
+
+## ⚠️ Current status: CI/CD is scaffolded, not wired up yet
+
+`.github/workflows/rag_test.yml` and `deploy.yml` exist and define the intended pipeline (install deps, run tests, run a RAGAS regression check, build/push/deploy on tag), but the test and evaluation steps are currently placeholder `echo` commands, and `tests/` has no test files yet. This is stated plainly here rather than left for someone to discover by opening the workflow file and finding it does nothing. Turning these into real, running steps (actual pytest suite, a real golden-dataset RAGAS threshold check) is the next real piece of work on this project, not something already done.
 
 ---
 
@@ -62,8 +64,8 @@ graph TD
 
 1. Clone repo:
     ```bash
-    git clone https://github.com/my-org/auto-rag-devops.git
-    cd auto-rag-devops
+    git clone https://github.com/soobhanu55/AutoRAG-DevOps.git
+    cd AutoRAG-DevOps
     ```
 
 2. Install dependencies:
@@ -100,19 +102,15 @@ Dashboard runs on `http://localhost:8501`.
 
 ---
 
-## 🐳 Docker and CI/CD
+## 🐳 Docker
 
-### Docker
 To build and run the entire application using Docker:
 ```bash
-docker build -t auto-rag-devops .
-docker run -p 8000:8000 auto-rag-devops
+docker build -t autorag-devops .
+docker run -p 8000:8000 autorag-devops
 ```
 
-### CI/CD
-This project includes GitHub Actions workflows.
-*   **.github/workflows/rag_test.yml**: Runs unit tests and simulated RAGAS evaluations on every Push/PR to `main`.
-*   **.github/workflows/deploy.yml**: Builds Docker artifact and deploys on git tags.
+`.github/workflows/deploy.yml` sketches out a build-push-deploy pipeline (Docker Hub + SSH to a server) but the deploy step's server commands are commented out and the Docker Hub repo referenced is a placeholder — it documents an intended deployment path, not a live one.
 
 ---
 
@@ -138,6 +136,3 @@ curl -X 'POST' \
   "top_k": 5
 }'
 ```
-=======
-# AutoRAG-DevOps-CI-CD-Driven-Self-Optimizing-Retrieval-Augmented-Generation-Architecture
->>>>>>> 15c579369339e093ae4cdc0a98bf23e8fca9322f
