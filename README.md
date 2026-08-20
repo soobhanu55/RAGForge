@@ -6,7 +6,7 @@ Modular architecture: swappable retrievers, chunkers, and rerankers behind a Fas
 
 ---
 
-## 🏗 Architecture Flow
+## Architecture Flow
 
 ```mermaid
 graph TD
@@ -32,14 +32,14 @@ graph TD
     N -->|Scored via RAGAS| O[Best Config Auto-Deployed]
 ```
 
-## 🚀 Key Features
+## Key Features
 
 *   **Multi-Retriever System**: Switch seamlessly between Dense, Sparse (BM25), and Hybrid retrieval.
 *   **Dynamic Chunking**: Configurable chunking rules including Naive Fixed, Semantic breakpoints, and token-based Sliding Windows.
 *   **Pipeline Optimizer**: Grid-searches components, evaluated locally with RAGAS metrics (Faithfulness, Recall, Precision, Relevance) to find the optimal deployment config.
 *   **Streamlit UI**: Full diagnostic view of the pipeline flow, ingestion controls, and evaluation tools.
 
-## 💻 Tech Stack
+## Tech Stack
 
 - **Core**: Python 3.11, FastAPI
 - **RAG & Gen**: LangChain, OpenAI (`gpt-3.5-turbo`), BAAI `bge-small-en-v1.5`
@@ -47,7 +47,7 @@ graph TD
 - **Eval**: RAGAS
 - **Ops**: Docker, GitHub Actions, Streamlit
 
-## ⚠️ Current status: CI/CD is scaffolded, not wired up yet
+## Current status: CI/CD is scaffolded, not wired up yet
 
 `.github/workflows/rag_test.yml` and `deploy.yml` exist and define the intended pipeline (install deps, run tests, run a RAGAS regression check, build/push/deploy on tag), but the test and evaluation steps are currently placeholder `echo` commands, and `tests/` has no test files yet. This is stated plainly here rather than left for someone to discover by opening the workflow file and finding it does nothing. Turning these into real, running steps (actual pytest suite, a real golden-dataset RAGAS threshold check) is the next real piece of work on this project, not something already done.
 
@@ -71,7 +71,7 @@ The genuinely interesting result: **Hybrid retrieval scored *worse* than pure De
 
 ---
 
-## 🛠 Setup Instructions
+## Setup Instructions
 
 ### Prerequisites
 1. Python 3.11+
@@ -104,7 +104,7 @@ The genuinely interesting result: **Hybrid retrieval scored *worse* than pure De
     docker run -p 6333:6333 -p 6334:6334 qdrant/qdrant
     ```
 
-### ▶️ Running Locally (Development)
+### Running Locally (Development)
 
 **1. Start the FastAPI Backend:**
 ```bash
@@ -120,7 +120,7 @@ Dashboard runs on `http://localhost:8501`.
 
 ---
 
-## 🐳 Docker
+## Docker
 
 To build and run the entire application using Docker:
 ```bash
@@ -132,7 +132,7 @@ docker run -p 8000:8000 autorag-devops
 
 ---
 
-## ❓ Example Queries
+## Example Queries
 
 1. Ingest documents via the dashboard or using curl:
 ```bash
